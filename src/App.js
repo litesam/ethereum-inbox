@@ -19,12 +19,13 @@ class App extends Component {
     e.preventDefault()
 
     const accounts = await web3.eth.getAccounts()
+    const lastMessage = this.state.message
 
     this.setState({ stateMessage: 'Waiting for transaction success...' })
 
     await inbox.methods.setMessage(this.state.message).send({ from: accounts[0] })
 
-    this.setState({ stateMessage: 'Your message is updated!' })
+    this.setState({ stateMessage: 'Your message is updated!', lastMessage, message: '' })
   }
 
   onChange = (e) => {
@@ -42,6 +43,7 @@ class App extends Component {
           />
           <button type="submit">Update Message!</button>
         </form>
+        <p>{this.state.stateMessage}</p>
       </div>
     )
   }
